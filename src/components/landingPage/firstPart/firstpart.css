@@ -1,0 +1,84 @@
+:root {
+  --primary-color: #b2d8c3;
+  --primary-color-green: #43906e;
+  --primary-color-blue: #237d7e;
+  --text-color: #383838;
+}
+.firstPartContainer {
+    margin: 50px 200px 0 200px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+}
+.rightBox {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.title {
+  margin-left: auto;
+}
+.title h2 {
+  color: var(--text-color);
+  font-size: 2.5rem;
+}
+.title h1 {
+  margin-left: auto;
+
+  color: var(--text-color);
+  font-size: 2.3rem;
+}
+.advantagesBox {
+  margin-left: auto;
+}
+.advantagesBoxUl {
+  list-style-type: inherit;
+}
+.advantagesItems {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.advantagesItems p {
+  margin: 15px 10px;
+  margin-left: auto;
+}
+.diamondIcon {
+  color: var(--primary-color-green);
+}
+.btnBox {
+  display: flex;
+  margin-left: auto;
+}
+.productTag{
+  color: var(--primary-color-blue);
+}
+.btn {
+  width: 170px;
+  height: 50px;
+  padding: 5px 10px;
+  border: none;
+}
+.btn:nth-child(1) {
+  margin-right: 15px;
+  background-color: var(--primary-color-green);
+  color: white;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+.btn:nth-child(2) {
+  margin-left: 15px;
+  background-color: white;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+.leftBox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 30%;
+  background-color: red;
+}

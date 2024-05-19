@@ -1,0 +1,44 @@
+:root {
+  --primary-color: #B2D8C3;
+  --primary-color-darker: #43906E;
+  --primary-color-blue: #237D7E;
+  --text-color: #383838;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  padding: 0 100px;
+  box-shadow: 0px 0px 8px 0px rgba(25, 25, 25, 0.75);
+}
+.logoBox {
+}
+.logoImage {
+  width: 70px;
+  height: 70px;
+}
+.listBox {
+}
+.listBoxUl {
+  display: flex;
+  flex-direction: row-reverse;
+  list-style-type: none;
+}
+.listItem {
+  color: var(--text-color);
+  margin: 0 15px;
+  font-weight: bold;
+
+}
+.registerBox {
+}
+.registerBtn {
+  background-color: var(--primary-color-darker);
+  color: rgb(242, 242, 242);
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 10px 15px;
+}

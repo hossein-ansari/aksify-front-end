@@ -1,0 +1,38 @@
+:root {
+    --primary-color: #B2D8C3;
+    --primary-color-darker: #43906E;
+    --primary-color-blue: #237D7E;
+    --text-color: #383838;
+  }
+.dataBoxContainer {
+  margin: 100px 100px 0 100px;
+  display: flex;
+  align-items: center;
+}
+.dataBox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #F0f0f0;
+  box-shadow: 0px 0px 5px 0px rgba(25, 25, 25, 0.75);
+  border-radius: 8px;
+  padding: 20px 20px;
+  width: 25%;
+  margin: 0 4%;
+  transition: 0.1s ease-in-out;
+}
+.dataBox:hover {
+    transform: scale(1.12);
+}
+.imgDataBox {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+}
+.h3DataBox {
+    color: var(--primary-color-darker);
+}
+.pDataBox {
+    color: var(--text-color);
+}
