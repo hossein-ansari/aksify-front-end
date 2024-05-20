@@ -4,9 +4,7 @@
   --primary-color-blue: #237d7e;
   --text-color: #383838;
 }
-.selectedROL {
 
-}
 .loginBox {
   background-color: black;
   padding: 1rem;
@@ -18,23 +16,23 @@
   justify-content: center;
   flex-direction: column;
 }
-.loginBtnBar{
-    width: max-content;
-    padding: 0.5rem;
-    background-color: #c3c3c3;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
+.loginBtnBar {
+  width: max-content;
+  background-color: rgb(203, 227, 255);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem;
 }
-.loginBtnBar button{
-    padding: 0.2rem;    
-    background-color: #c3c3c3;
-    font-weight: bold;
-    width: 100px;
-    color: rgb(29, 29, 29);
-    border: none;
+.loginBtnBar button {
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: rgb(203, 227, 255);
+  font-weight: bold;
+  width: 100px;
+  color: rgb(29, 29, 29);
+  border: none;
 }
 
 .loginFormBar {
@@ -52,7 +50,6 @@
 }
 .submitBoxLogin {
   margin-top: 30px;
-
 }
 .submitBtnLogin {
   margin-bottom: 0.5rem;
@@ -63,4 +60,7 @@
   border: none;
   box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.301);
   background-color: var(--primary-color-darker);
+}
+.selectedROL {
+  color: var(--primary-color-darker) !important;
 }
