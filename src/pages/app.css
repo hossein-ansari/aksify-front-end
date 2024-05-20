@@ -1,0 +1,15 @@
+.aksShopTemplate{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: row;
+    background-color: #f3f3f3;
+
+}
+.LoginPage{
+    background-color: #ff1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}

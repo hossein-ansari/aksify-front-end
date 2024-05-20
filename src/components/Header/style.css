@@ -30,7 +30,10 @@
   color: var(--text-color);
   margin: 0 15px;
   font-weight: bold;
-
+  cursor: pointer;
+}
+.listItem:hover {
+  color: var(--primary-color-darker);
 }
 .registerBox {
 }

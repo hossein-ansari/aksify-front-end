@@ -1,0 +1,30 @@
+.AksContainer{
+    width: 100%;
+}
+.AksBar{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+.AksBox{
+    cursor: pointer;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.305);
+    margin: 1rem 2rem;
+    width: 15vw;
+    border-radius: 10px;
+    background-color:rgb(255, 255, 255);
+    transition: 0.2s  ease-in-out;
+}
+.AksBox:hover{
+    transform: scale(1.1);
+}
+.AksImage{
+    width: 15vw;
+    border-radius:10px 10px 0 0;
+
+
+}
+.AksTitle{
+
+}
