@@ -1,33 +1,60 @@
 import React, { useState } from "react";
 import "./login.css";
-import IformData from './interface'
+import IformData from "./interface";
+import { useCookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom';
+
 const Login: React.FC = () => {
   const [registerOrLogin, setRegisterOrLogin] = useState<String>("register");
-  const [fromData, setFromData] = useState<IformData>({
-    userName : '',
-    password : '',
-    email : '',
+  const [cookies, setCookie] = useCookies(["user"]);
+  const [formData, setFormData] = useState<IformData>({
+    userName: "",
+    password: "",
+    email: "",
   });
-
+  const navigate = useNavigate();
   function changeLoginMode(newMode: string) {
     setRegisterOrLogin(newMode);
   }
 
   function loginOrRegister() {
-    fetch(`http://localhost:4000/subscriptions/getAll`, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+    if (registerOrLogin === "register") {
+      fetch(`http://localhost:4000/users/create`, {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          setRegisterOrLogin("login");
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    } else {
+      fetch(`http://localhost:4000/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setCookie("user", data, {
+            path: "/",
+            expires: new Date(Date.now() + 604800000),
+            sameSite: "none",
+            secure: true,
+          });
+          navigate('/');
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
   }
   return (
     <div className="loginBox">
@@ -46,20 +73,70 @@ const Login: React.FC = () => {
         </button>
       </div>
       <div className="loginFormBar">
-        <form action="submit">
-          <input
-            value={formData.userName}
-            className="loginFormInput"
-            placeholder="userName"
-            type="text"
-          />
-          <input
-            className="loginFormInput"
-            placeholder="password"
-            type="password"
-          />
-          <input className="loginFormInput" placeholder="email" type="text" />
-        </form>
+        {registerOrLogin === "register" ? (
+          <form action="submit">
+            <input
+              value={formData.userName}
+              className="loginFormInput"
+              placeholder="userName"
+              type="text"
+              onChange={(e) =>
+                setFormData((pre) => ({
+                  ...pre,
+                  userName: e.target.value,
+                }))
+              }
+            />
+            <input
+              className="loginFormInput"
+              placeholder="password"
+              type="password"
+              onChange={(e) =>
+                setFormData((pre) => ({
+                  ...pre,
+                  password: e.target.value,
+                }))
+              }
+            />
+            <input
+              className="loginFormInput"
+              placeholder="email"
+              type="email"
+              onChange={(e) =>
+                setFormData((pre) => ({
+                  ...pre,
+                  email: e.target.value,
+                }))
+              }
+            />
+          </form>
+        ) : (
+          <form action="submit">
+            <input
+              value={formData.userName}
+              className="loginFormInput"
+              placeholder="userName"
+              type="text"
+              onChange={(e) =>
+                setFormData((pre) => ({
+                  ...pre,
+                  userName: e.target.value,
+                }))
+              }
+            />
+            <input
+              className="loginFormInput"
+              placeholder="password"
+              type="password"
+              onChange={(e) =>
+                setFormData((pre) => ({
+                  ...pre,
+                  password: e.target.value,
+                }))
+              }
+            />
+          </form>
+        )}
       </div>
       <div className="submitBoxLogin">
         <button onClick={loginOrRegister} className="submitBtnLogin">

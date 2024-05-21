@@ -1,0 +1,18 @@
+.toolBar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    border: 1px solid black;
+    min-width: 20vw;
+}
+.tool{
+    margin: 0 10px;
+
+}
+.unSelect{
+color: black;
+}
+.select{
+    color: green;
+}

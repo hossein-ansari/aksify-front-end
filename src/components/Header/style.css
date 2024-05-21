@@ -1,7 +1,7 @@
 :root {
-  --primary-color: #B2D8C3;
-  --primary-color-darker: #43906E;
-  --primary-color-blue: #237D7E;
+  --primary-color: #b2d8c3;
+  --primary-color-darker: #43906e;
+  --primary-color-blue: #237d7e;
   --text-color: #383838;
 }
 
@@ -44,4 +44,8 @@
   font-weight: bold;
   border-radius: 5px;
   padding: 10px 15px;
+  text-decoration: none;
+}
+.registerBtn svg{
+  margin-right: 5px;
 }

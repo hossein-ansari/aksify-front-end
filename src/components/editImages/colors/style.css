@@ -1,0 +1,68 @@
+.colorToolBar {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+.selectedColorBar {
+  align-items: center;
+  justify-content: center;
+}
+.selectedColorBar p {
+  margin-left: 6px;
+}
+.selectedColor {
+  border-radius: 3px;
+
+  width: 56px;
+  height: 60px;
+}
+.colorPaletsSelected {
+  border-radius: 3px;
+
+  border: 1px solid black;
+  margin: 0px 2px;
+  padding: 2px;
+  background-color: rgb(255, 255, 255);
+}
+.colorBar {
+  min-width: 16vw;
+  max-width: 16vw;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.colorPalets {
+  border: 1px solid black;
+  margin: 1px 2px;
+  padding: 2px;
+  background-color: rgb(255, 255, 255);
+}
+.color {
+  width: 30px;
+  height: 35px;
+}
+.customColorNavBar{
+
+}
+.customColorBar {
+  padding: 2px;
+  margin-top: 10px;
+  position: relative;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+.customColor {
+  border-radius: 3px;
+  background: linear-gradient(90deg, #ff0000, #ff9900, #ffcc00, #33cc33, #3399ff, #6633cc, #ff00ff);
+  width: 54px;
+  height: 59px;
+}
+.colorPicker {
+  z-index: 10;
+  bottom: 115px;
+  position: absolute;
+  border: 1px solid black;
+  background-color: rgb(246, 246, 246);
+}
+

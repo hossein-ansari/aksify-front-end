@@ -1,0 +1,15 @@
+:root {
+    --primary-color: #b2d8c3;
+    --primary-color-darker: #43906e;
+    --primary-color-blue: #237d7e;
+    --text-color: #383838;
+}
+.headerBar{
+    display: flex;
+    align-items: center;
+    height: 150px;
+    background-color: var(--primary-color);
+    justify-content: center;
+    width: 100%;
+    border-top: 2px solid rgb(46, 46, 46);
+}

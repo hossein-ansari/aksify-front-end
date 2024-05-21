@@ -1,5 +1,6 @@
 .AksContainer{
     width: 100%;
+    max-width: 100%;
 }
 .AksBar{
     display: flex;
@@ -12,6 +13,7 @@
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.305);
     margin: 1rem 2rem;
     width: 15vw;
+    max-width: 15vw;
     border-radius: 10px;
     background-color:rgb(255, 255, 255);
     transition: 0.2s  ease-in-out;
@@ -21,6 +23,7 @@
 }
 .AksImage{
     width: 15vw;
+    max-width: 15vw;
     border-radius:10px 10px 0 0;
 
 

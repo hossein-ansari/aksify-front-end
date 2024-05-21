@@ -2,13 +2,16 @@ import React from "react";
 import "./firstpart.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiamond } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 export default function FirstPart() {
   return (
     <div className="firstPartContainer">
       <div className="rightBox">
         <div className="title">
           <h2>ساخت عکسِ </h2>
-          <h1><span className='productTag'>محصولات</span> خود</h1>
+          <h1>
+            <span className="productTag">محصولات</span> خود
+          </h1>
         </div>
         <div className="advantagesBox">
           <ul className="advantagesBoxUl">
@@ -28,11 +31,17 @@ export default function FirstPart() {
           </ul>
         </div>
         <div className="btnBox">
-          <button className="btn">شروع ساخت</button>
-          <button className="btn">راهنمای ساخت</button>
+          <Link className="btn" to="/aksshop">
+            شروع ساخت
+          </Link>
+          <Link className="btn" to="/aksshop">
+            راهنمای ساخت
+          </Link>
         </div>
       </div>
-      <div  className="leftBox"><p>adsf</p></div>
+      <div className="leftBox">
+        <p>adsf</p>
+      </div>
     </div>
   );
 }
