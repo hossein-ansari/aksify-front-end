@@ -7,7 +7,6 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function LHeader() {
   const [cookies] = useCookies(["user"]);
-  console.log(cookies.user.userName);
   return (
     <div className="container">
       <div className="logoBox">
@@ -24,7 +23,7 @@ export default function LHeader() {
       </div>
       <div className="registerBox">
         <button className="registerBtn">
-          {cookies.user.useName !== false ? (
+          {cookies.user !== undefined  ? (
             <Link className="registerBtn" to="/profile">
               <FontAwesomeIcon className="profile-icon" icon={faUser} />
               {cookies.user.userName}

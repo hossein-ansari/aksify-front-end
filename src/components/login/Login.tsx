@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [registerOrLogin, setRegisterOrLogin] = useState<String>("register");
+  console.log(process.env.REACT_APP_API_BASE_URL)
   const [cookies, setCookie] = useCookies(["user"]);
   const [formData, setFormData] = useState<IformData>({
     userName: "",
@@ -19,7 +20,7 @@ const Login: React.FC = () => {
 
   function loginOrRegister() {
     if (registerOrLogin === "register") {
-      fetch(`http://localhost:4000/users/create`, {
+      fetch(`${process.env.REACT_APP_API_BASE_URL}/users/create`, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
@@ -34,7 +35,7 @@ const Login: React.FC = () => {
           console.error("Error fetching data:", error);
         });
     } else {
-      fetch(`http://localhost:4000/users/login`, {
+      fetch(`${process.env.REACT_APP_API_BASE_URL}/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
