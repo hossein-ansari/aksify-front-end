@@ -1,5 +1,7 @@
 export default interface IproductData{
-    name: String,
-    images: Array<String>,
-    tags: Array<String>,
+    _id: string,
+    name: string,
+    images: Array<string>,
+    tags: Array<string>,
+    coverImage: string
 }

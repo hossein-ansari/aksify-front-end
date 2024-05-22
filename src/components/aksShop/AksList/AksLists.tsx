@@ -26,10 +26,10 @@ export default function AksLists() {
   return (
     <div className="AksContainer">
       <div className="AksBar">
-        {products.map(()=>(
-        <div className="AksBox" onClick={() => moveEditImage("123")}>
-          <img className="AksImage" src="/test.jpg" alt="" />
-          <p className="AksTitle">پاکت</p>
+        {products.map((product)=>(
+        <div className="AksBox" onClick={() => moveEditImage(product._id)}>
+          <img className="AksImage" src={`${process.env.REACT_APP_API_BASE_URL}/${product.coverImage}`} alt={product.name} />
+          <p className="AksTitle">{product.name}</p>
         </div>
         ))}
       </div>
