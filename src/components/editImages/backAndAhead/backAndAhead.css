@@ -1,0 +1,11 @@
+.undoRedo {
+  margin-left:     10px;
+  border: 1px solid black;
+  padding: 0px;
+  margin-top: 9px;
+
+}
+.undoRedo div {
+    padding: 6.5px 10px;
+  cursor: pointer;
+}

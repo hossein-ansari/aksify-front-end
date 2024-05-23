@@ -1,12 +1,16 @@
 
 import React, { useContext, useState } from "react";
 import { contextBox } from "../../../_context/context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEraser } from "@fortawesome/free-solid-svg-icons";
+import { faPaintBrush  } from "@fortawesome/free-solid-svg-icons";
+
 import "./style.css";
 export default function Tools() {
   const context:any = useContext(contextBox);
   const [tools, setTools] = useState<any>([
-    { icon: "brush", name: "brush", style: "select" },
-    { icon: "eraser", name: "eraser", style: "unSelect" },
+    { icon: faPaintBrush, name: "brush", style: "select" },
+    { icon: faEraser, name: "eraser", style: "unSelect" },
   ]);
   function selectTool(tool:any) {
     const toolsCopy = [...tools];
@@ -26,7 +30,7 @@ export default function Tools() {
       {tools.map((tool:any) => (
         <div key={tool.name}>
           <p className={`${tool.style} tool`} onClick={(e) => selectTool(tool)}>
-            {tool.icon}
+          <FontAwesomeIcon icon={tool.icon}></FontAwesomeIcon>
           </p>
         </div>
       ))}

@@ -6,7 +6,6 @@ import domtoimage from "dom-to-image";
 
 const Palets: React.FC<any> = (props: any) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [circles, setCircles] = useState<Array<object>>([]);
   const context = useContext<any>(contextBox);
   const [coverImg, setCoverImg] = useState<string>("");
 
@@ -23,7 +22,7 @@ const Palets: React.FC<any> = (props: any) => {
     const { clientX, clientY } = event;
     let isDrawOn = isDragging && clientY > 0 + Number(context.brushSize);
     if (isDrawOn && context.selectedTool === "brush") {
-      setCircles((prevCircles) => [
+      context.setCircles((prevCircles:any) => [
         ...prevCircles,
         {
           x: clientX,
@@ -36,7 +35,7 @@ const Palets: React.FC<any> = (props: any) => {
       ]);
     }
     if (isDrawOn && context.selectedTool === "eraser") {
-      setCircles((prevCircles) => [
+      context.setCircles((prevCircles:any) => [
         ...prevCircles,
         {
           x: clientX,
@@ -82,7 +81,7 @@ const Palets: React.FC<any> = (props: any) => {
         onMouseDown={clickHandler}
         onMouseMove={(e) => MoveHandler(e)}
       >
-        {circles.map((circle: any) => (
+        {context.circles.map((circle: any) => (
           <div
             key={circle.id}
             style={{
