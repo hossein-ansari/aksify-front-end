@@ -1,0 +1,56 @@
+.editPage {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh; /* Ensure the page takes up the full viewport height */
+    overflow: hidden; /* Prevent page scrolling */
+}
+
+.EditBarPalet {
+    flex-grow: 1; /* Take up remaining space */
+}
+
+.EditImageBar {
+    width: 20vw;
+    background-color: var(--primary-color);
+    border-left: 2px solid rgb(45, 45, 45);
+    overflow: hidden; /* Prevent scrolling of this container */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Make it take up the full viewport height */
+}
+
+.editImageNavBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-y: auto; /* Enable vertical scrolling */
+    flex-grow: 1; /* Take up remaining space in the EditImageBar */
+}
+
+.editImageNavBox {
+    cursor: pointer;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.305);
+    padding: .7rem;
+    width: 12vw;
+    max-width: 12vw;
+    border-radius: 10px;
+    transition: 0.2s ease-in-out;
+    margin: 1rem 0;
+}
+
+.editImageNavBox:hover {
+    transform: scale(1.1);
+}
+
+.editImageNavImage {
+    width: 12vw;
+    max-width: 12vw;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.chooseImg{
+
+    border-bottom: 2px solid rgba(255, 255, 255, 0.434);
+    padding-bottom: 1rem;
+}

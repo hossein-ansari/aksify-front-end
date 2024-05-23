@@ -1,0 +1,24 @@
+.profileHeaderBox{
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 80vw;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 1px #336d5459;
+}
+.profileImageBox{
+    border-left: 3px solid #f6f6f6;
+}
+.profileImage{
+    width: 150px;
+    height: 150px;
+}
+.userDataBox{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+    width: 450px;
+    margin-right: 20px;
+}

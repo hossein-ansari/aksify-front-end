@@ -4,7 +4,6 @@
   --primary-color-blue: #237d7e;
   --text-color: #383838;
 }
-
 .container {
   display: flex;
   align-items: center;
@@ -26,10 +25,11 @@
   flex-direction: row-reverse;
   list-style-type: none;
 }
-.listItem {
+.listItem a{
   color: var(--text-color);
   margin: 0 15px;
   font-weight: bold;
+  text-decoration: none;
   cursor: pointer;
 }
 .listItem:hover {

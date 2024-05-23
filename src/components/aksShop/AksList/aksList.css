@@ -31,8 +31,7 @@
     width: 15vw;
     max-width: 15vw;
     border-radius:10px 10px 0 0;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 5px; 
+    border-bottom:3px solid var(--primary-color);
 }
 .AksTitle{
 

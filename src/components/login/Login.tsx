@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [registerOrLogin, setRegisterOrLogin] = useState<String>("register");
-  console.log(process.env.REACT_APP_API_BASE_URL)
   const [cookies, setCookie] = useCookies(["user"]);
   const [formData, setFormData] = useState<IformData>({
     userName: "",

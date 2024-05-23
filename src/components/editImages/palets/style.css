@@ -4,9 +4,7 @@
     height: 420px;
     border: 10px solid yellow outset;
     padding: 10px;
-    background-color: #dba83b;
     z-index: -10;
-    background-image: url('/public/aksifyLogo.png');
     background-size: cover;
     background-repeat: no-repeat;
 }

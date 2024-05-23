@@ -1,13 +1,21 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import "./style.css";
 import { contextBox } from "../../../_context/context";
-import domtoimage from 'dom-to-image';
+import domtoimage from "dom-to-image";
 
-const Palets: React.FC = () => {
+const Palets: React.FC<any> = (props: any) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [circles, setCircles] = useState<Array<object>>([]);
   const context = useContext<any>(contextBox);
+  const [coverImg, setCoverImg] = useState<string>("");
+
+  useEffect(() => {
+    if (props.coverImage) {
+      const imageUrl = props.coverImage.replace(/\\/g, '/');
+      setCoverImg(imageUrl);
+    }
+  }, [props.coverImage]);
   function clickHandler() {
     setIsDragging(true);
   }
@@ -43,29 +51,33 @@ const Palets: React.FC = () => {
     }
   }
 
-    const printRef = useRef<any>();
-  
-    const handleCaptureClick = () => {
-      domtoimage.toPng(printRef.current)
-        .then((dataUrl) => {
-          const link = document.createElement('a');
-          link.href = dataUrl;
-          link.download = 'screenshot.png';
-          link.click();
-        })
-        .catch((error) => {
-          console.error('Error capturing image:', error);
-        });
-    };
+  const printRef = useRef<any>();
+
+  const handleCaptureClick = () => {
+    domtoimage
+      .toPng(printRef.current)
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = "screenshot.png";
+        link.click();
+      })
+      .catch((error) => {
+        console.error("Error capturing image:", error);
+      });
+  };
   function upHandler() {
     setIsDragging(false);
   }
 
   // eslint-disable-next-line react/display-name
   return (
-    <div className="paletsContainer"   ref={printRef}>
+    <div className="paletsContainer" ref={printRef}>
       <div
         className="palets"
+        style={{
+          backgroundImage: `url(${process.env.REACT_APP_API_BASE_URL}/${coverImg})`,
+        }}
         onMouseUp={upHandler}
         onMouseDown={clickHandler}
         onMouseMove={(e) => MoveHandler(e)}

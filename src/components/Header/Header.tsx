@@ -14,11 +14,11 @@ export default function LHeader() {
       </div>
       <div className="listBox">
         <ul className="listBoxUl">
-          <li className="listItem">خانه</li>
-          <li className="listItem">کارخانه عکس</li>
-          <li className="listItem">تعرفه ها</li>
-          <li className="listItem">درباره</li>
-          <li className="listItem">تماس با ما</li>
+          <li className="listItem"><Link to="/">فروشگاه عکس</Link></li>
+          <li className="listItem"><Link to="/aksshop">فروشگاه عکس</Link></li>
+          <li className="listItem"><Link to="/subscription">تعرفه ها</Link></li>
+          <li className="listItem"><Link to="/about">درباره ما</Link></li>
+          <li className="listItem"><Link to="/contact">تماس با ما</Link></li>
         </ul>
       </div>
       <div className="registerBox">

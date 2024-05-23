@@ -1,10 +1,10 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import AksShop from './pages/AksShop';
 import Login from './pages/Login';
-import EditPage from './pages/EditPage';
-
+import EditPage from './pages/editPage/EditPage';
+import Profile from './pages/Profile'
+import Subscription from './pages/Subscription'
 const App = () => {
   return (
     <Router>
@@ -13,6 +13,8 @@ const App = () => {
         <Route path="/aksShop" element={<AksShop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/editImage/:id" element={<EditPage />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/subscription" element={<Subscription />} />
 
       </Routes>
     </Router>
