@@ -5,6 +5,7 @@ import Colors from '../colors/Colors';
 import Size from '../sizes/size';
 import BackAndAhead from '../backAndAhead/BackAndAhead'
 export default function Header() {
+  
   return (
     <div className='headerBar'>
       <Tools></Tools>

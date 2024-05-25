@@ -8,10 +8,13 @@ const Palets: React.FC<any> = (props: any) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const context = useContext<any>(contextBox);
   const [coverImg, setCoverImg] = useState<string>("");
+  const [file, setFile] = useState<any>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [images, setImages] = useState<Array<string>>([]);
 
   useEffect(() => {
     if (props.coverImage) {
-      const imageUrl = props.coverImage.replace(/\\/g, '/');
+      const imageUrl = props.coverImage.replace(/\\/g, "/");
       setCoverImg(imageUrl);
     }
   }, [props.coverImage]);
@@ -22,7 +25,7 @@ const Palets: React.FC<any> = (props: any) => {
     const { clientX, clientY } = event;
     let isDrawOn = isDragging && clientY > 0 + Number(context.brushSize);
     if (isDrawOn && context.selectedTool === "brush") {
-      context.setCircles((prevCircles:any) => [
+      context.setCircles((prevCircles: any) => [
         ...prevCircles,
         {
           x: clientX,
@@ -35,7 +38,7 @@ const Palets: React.FC<any> = (props: any) => {
       ]);
     }
     if (isDrawOn && context.selectedTool === "eraser") {
-      context.setCircles((prevCircles:any) => [
+      context.setCircles((prevCircles: any) => [
         ...prevCircles,
         {
           x: clientX,
@@ -49,9 +52,7 @@ const Palets: React.FC<any> = (props: any) => {
       ]);
     }
   }
-
   const printRef = useRef<any>();
-
   const handleCaptureClick = () => {
     domtoimage
       .toPng(printRef.current)
@@ -68,37 +69,77 @@ const Palets: React.FC<any> = (props: any) => {
   function upHandler() {
     setIsDragging(false);
   }
+  const handleFileChange = async (e:any) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    await handleFileUpload(selectedFile);
+  };
+
+  const handleFileUpload = async (selectedFile:any) => {
+    if (!selectedFile) {
+      console.error('No file selected');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('images', selectedFile);
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/imageUpload/create`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data:Record<string,string> = await response.json();
+      setImages(prev => [...prev, data.images]);
+    } catch (err) {
+    }
+  };
 
   // eslint-disable-next-line react/display-name
   return (
-    <div className="paletsContainer" ref={printRef}>
-      <div
-        className="palets"
-        style={{
-          backgroundImage: `url(${process.env.REACT_APP_API_BASE_URL}/${coverImg})`,
-        }}
-        onMouseUp={upHandler}
-        onMouseDown={clickHandler}
-        onMouseMove={(e) => MoveHandler(e)}
-      >
-        {context.circles.map((circle: any) => (
-          <div
-            key={circle.id}
-            style={{
-              position: "absolute",
-              left:
-                circle.x - (circle.size > 20 ? circle.size - 15 : circle.size),
-              top:
-                circle.y - (circle.size > 20 ? circle.size - 15 : circle.size),
-              backgroundColor: circle.color,
-              borderRadius: circle.reduce,
-              width: `${circle.size}px`,
-              height: `${circle.size}px`,
-            }}
-          ></div>
-        ))}
+    <div>
+      <div className="paletsContainer" ref={printRef}>
+        <div
+          className="palets"
+          style={{
+            backgroundImage: `url(${process.env.REACT_APP_API_BASE_URL}/${coverImg})`,
+          }}
+          onMouseUp={upHandler}
+          onMouseDown={clickHandler}
+          onMouseMove={(e) => MoveHandler(e)}
+        >
+          {images.map((src)=>(
+            <div>
+              <img src=`` alt="" />
+            </div>
+          ))}
+          {context.circles.map((circle: any) => (
+            <div
+              key={circle.id}
+              style={{
+                position: "absolute",
+                left:
+                  circle.x -
+                  (circle.size > 20 ? circle.size - 15 : circle.size),
+                top:
+                  circle.y -
+                  (circle.size > 20 ? circle.size - 15 : circle.size),
+                backgroundColor: circle.color,
+                borderRadius: circle.reduce,
+                width: `${circle.size}px`,
+                height: `${circle.size}px`,
+              }}
+            ></div>
+          ))}
+        </div>
       </div>
       <button onClick={handleCaptureClick}>Capture as Image</button>
+      <input type="file" onChange={(e)=>handleFileChange(e)} />
     </div>
   );
 };
