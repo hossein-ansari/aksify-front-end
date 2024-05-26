@@ -8,7 +8,6 @@ const Colors: React.FC = () => {
   const [colors, setColors] = useState<Array<string>>([
     "#0000FF",
     "#FFFF00",
-    "#FFA500",
     "#800080",
     "#FFC0CB",
     "#A52A2A",
@@ -17,7 +16,6 @@ const Colors: React.FC = () => {
     "#FF00FF",
     "#00FF00",
     "#4B0082",
-    "#800000",
   ]);
   function changeSelectedColor(color:String) {
     context.setSelectedColor(color);

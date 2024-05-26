@@ -5,8 +5,13 @@ import { contextBox } from "../../../_context/context";
 import domtoimage from "dom-to-image";
 import { ResizableBox } from "react-resizable";
 import "react-resizable/css/styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
-const ResizableImage: React.FC<any> = ({ src, alt ,isSelected}) => {
+const ResizableImage: React.FC<any> = ({ src, alt, isSelected }) => {
   const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
 
   const handleResize = (e: any) => {
@@ -15,20 +20,29 @@ const ResizableImage: React.FC<any> = ({ src, alt ,isSelected}) => {
   };
   return (
     <div
-      style={!isSelected ? {
-        width: dimensions.width,
-        height: dimensions.height,
-        overflow: "auto",
-        border: "0px solid black",
-        overflowY: "hidden"
-      }: {        width: dimensions.width,
-        height: dimensions.height,
-        resize: "both",
-        overflow: "auto",
-        border: "2px solid blue",
-        overflowY: "hidden"
+      style={
+        !isSelected
+          ? {
+              width: dimensions.width,
+              height: dimensions.height,
+              overflow: "auto",
+              border: "0px solid black",
+              overflowY: "hidden",
+            }
+          : {
+              width: dimensions.width,
+              height: dimensions.height,
+              resize: "both",
+              overflow: "auto",
+              border: "2px solid blue",
+              overflowY: "hidden",
+            }
+      }
+      onResize={(e) => {
+        if (isSelected) {
+          handleResize(e);
+        }
       }}
-      onResize={(e)=>{if(isSelected){handleResize(e)}}}
     >
       <img
         className="unselectable"
@@ -53,7 +67,8 @@ const Palets: React.FC<any> = (props: any) => {
   const [file, setFile] = useState<any>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [images, setImages] = useState<IImage[]>([]);
-
+  const [cookies, setCookie] = useCookies(["user"]);
+  const navigate = useNavigate();
   useEffect(() => {
     if (props.coverImage) {
       const imageUrl = props.coverImage.replace(/\\/g, "/");
@@ -96,17 +111,29 @@ const Palets: React.FC<any> = (props: any) => {
   }
   const printRef = useRef<any>();
   const handleCaptureClick = () => {
-    domtoimage
-      .toPng(printRef.current)
-      .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = "screenshot.png";
-        link.click();
-      })
-      .catch((error) => {
-        console.error("Error capturing image:", error);
+    if (cookies.user.subscriptionType.limitExport >= 1) {
+      domtoimage
+        .toPng(printRef.current)
+        .then((dataUrl) => {
+          const link = document.createElement("a");
+          link.href = dataUrl;
+          link.download = "screenshot.png";
+          link.click();
+        })
+        .catch((error) => {
+          console.error("Error capturing image:", error);
+        });
+      const data = cookies.user;
+      data.subscriptionType.limitExport -= 1;
+      setCookie("user", data, {
+        path: "/",
+        expires: new Date(Date.now() + 604800000),
+        sameSite: "lax",
+        secure: true,
       });
+    } else {
+      navigate('/subscription')
+    }
   };
   function upHandler() {
     setIsDragging(false);
@@ -237,8 +264,20 @@ const Palets: React.FC<any> = (props: any) => {
           ))}
         </div>
       </div>
-      <button onClick={handleCaptureClick}>Capture as Image</button>
-      <input type="file" onChange={(e) => handleFileChange(e)} />
+      <div className="exportAndUploadBox">
+        <label className="downloadImgEditPage" onClick={handleCaptureClick}>
+          <FontAwesomeIcon icon={faDownload} />
+        </label>
+        <input
+          id="file-input"
+          style={{ display: "none" }}
+          type="file"
+          onChange={(e) => handleFileChange(e)}
+        />
+        <label className="downloadImgEditPage" htmlFor="file-input">
+          <FontAwesomeIcon icon={faUpload} />
+        </label>
+      </div>
     </div>
   );
 };

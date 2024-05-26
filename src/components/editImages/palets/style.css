@@ -9,13 +9,31 @@
     background-repeat: no-repeat;
 }
 .unselectable {
-    user-select: none;       /* Standard syntax */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none;    /* Firefox */
-    -ms-user-select: none;     /* Internet Explorer/Edge */
-    -webkit-user-drag: none;  /* Prevent image drag in Safari/Chrome */
-    -khtml-user-drag: none;   /* Prevent image drag in Konqueror */
-    -moz-user-drag: none;     /* Prevent image drag in Firefox */
-    -o-user-drag: none;       /* Prevent image drag in Opera */
-    user-drag: none;          /* Standard syntax */
+    user-select: none;       
+    -webkit-user-select: none;
+    -moz-user-select: none;  
+    -ms-user-select: none;    
+    -webkit-user-drag: none;  
+    -khtml-user-drag: none;   
+    -moz-user-drag: none;     
+    -o-user-drag: none;       
   }
+.exportAndUploadBox{
+    margin-left: 73vw;
+    display: flex;
+    align-items: center;
+}
+.downloadImgEditPage{
+    border-radius: 5px;
+    padding: 10px 15px;
+    border: 1px solid rgb(219, 219, 219);
+    background-color: var(--primary-color-darker);
+    cursor: pointer;
+}
+.downloadImgEditPage svg{
+    font-size: 1.2rem;
+    color: rgb(240, 240, 240);
+}
+.downloadImgEditPage:hover{
+    background-color: var(--primary-color-blue);
+}

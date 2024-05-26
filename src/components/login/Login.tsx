@@ -46,7 +46,7 @@ const Login: React.FC = () => {
           setCookie("user", data, {
             path: "/",
             expires: new Date(Date.now() + 604800000),
-            sameSite: "none",
+            sameSite: "lax",
             secure: true,
           });
           navigate('/');

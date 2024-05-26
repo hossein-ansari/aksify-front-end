@@ -2,10 +2,10 @@
   margin-left:     10px;
   border: 1px solid black;
   padding: 0px;
-  margin-top: 9px;
-
+  margin-top: 11px;
+  border-radius: 2px;
 }
 .undoRedo div {
-    padding: 6.5px 10px;
+    padding: 6.2px 10px;
   cursor: pointer;
 }
