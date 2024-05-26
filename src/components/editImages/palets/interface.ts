@@ -4,5 +4,5 @@ export default interface IImage {
     X:number,
     Y:number,
     id:string
-
+    isDrag: boolean,
   }

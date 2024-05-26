@@ -8,3 +8,14 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+.unselectable {
+    user-select: none;       /* Standard syntax */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    -webkit-user-drag: none;  /* Prevent image drag in Safari/Chrome */
+    -khtml-user-drag: none;   /* Prevent image drag in Konqueror */
+    -moz-user-drag: none;     /* Prevent image drag in Firefox */
+    -o-user-drag: none;       /* Prevent image drag in Opera */
+    user-drag: none;          /* Standard syntax */
+  }

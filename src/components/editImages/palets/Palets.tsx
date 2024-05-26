@@ -3,6 +3,48 @@ import IImage from "./interface";
 import "./style.css";
 import { contextBox } from "../../../_context/context";
 import domtoimage from "dom-to-image";
+import { ResizableBox } from "react-resizable";
+import "react-resizable/css/styles.css";
+
+const ResizableImage: React.FC<any> = ({ src, alt ,isSelected}) => {
+  const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
+
+  const handleResize = (e: any) => {
+    const { width, height } = e.target.getBoundingClientRect();
+    setDimensions({ width, height });
+  };
+  return (
+    <div
+      style={!isSelected ? {
+        width: dimensions.width,
+        height: dimensions.height,
+        overflow: "auto",
+        border: "0px solid black",
+        overflowY: "hidden"
+      }: {        width: dimensions.width,
+        height: dimensions.height,
+        resize: "both",
+        overflow: "auto",
+        border: "2px solid blue",
+        overflowY: "hidden"
+      }}
+      onResize={(e)=>{if(isSelected){handleResize(e)}}}
+    >
+      <img
+        className="unselectable"
+        draggable="false"
+        onDragStart={(e: any) => e.preventDefault()}
+        src={src}
+        alt={alt}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+        }}
+      />
+    </div>
+  );
+};
 
 const Palets: React.FC<any> = (props: any) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -103,6 +145,7 @@ const Palets: React.FC<any> = (props: any) => {
         {
           image: data.images,
           selected: true,
+          isDrag: false,
           id: Math.random().toString(),
           X: 20,
           Y: 30,
@@ -115,6 +158,9 @@ const Palets: React.FC<any> = (props: any) => {
     selected: boolean,
     id: string
   ) {
+    if (selected) {
+      setIsDragging(false);
+    }
     if (selected === true) {
       const imagesCopy = [...images];
       const imageSelectedToMove: IImage | undefined = imagesCopy.find(
@@ -144,23 +190,30 @@ const Palets: React.FC<any> = (props: any) => {
         >
           {images.map((src) => (
             <div
-              onDoubleClick={()=>{src.selected = !src.selected;}}
               style={{
                 position: "absolute",
                 width: "100px",
                 height: "100px",
-                left: src.X - 100,
-                top: src.Y - 100,
               }}
-              onMouseMove={(e) => MoveImages(e, src.selected, src.id)}
+              onDoubleClick={() => {
+                src.selected = !src.selected;
+              }}
+              onMouseUp={() => {
+                if (src.selected) {
+                  src.isDrag = false;
+                }
+              }}
+              onMouseDown={() => {
+                if (src.selected) {
+                  src.isDrag = true;
+                }
+              }}
+              onMouseMove={(e) => MoveImages(e, src.isDrag, src.id)}
             >
-              <img
-                style={{
-                  width: "200px",
-                  height: "200px",
-                }}
+              <ResizableImage
                 src={`${process.env.REACT_APP_API_BASE_URL}/${src.image}`}
-                alt={`${src.selected}`}
+                isSelected={src.selected}
+                alt="Resizable"
               />
             </div>
           ))}
