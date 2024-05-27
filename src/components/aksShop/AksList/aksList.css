@@ -30,6 +30,7 @@
 .AksImage{
     width: 15vw;
     max-width: 15vw;
+    height: 200px;
     border-radius:10px 10px 0 0;
     border-bottom:3px solid var(--primary-color);
 }

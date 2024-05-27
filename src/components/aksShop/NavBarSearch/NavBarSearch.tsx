@@ -1,37 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./navBarSearch.css";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-export default function NavBarSearch() {
+const NavBarSearch: React.FC<any> = ({ setQuery, searchItems }: any) => {
+  const [tags, setTags] = useState<any>();
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/tags/getAll`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTags(data);
+        console.log(data);
+      });
+  }, []);
   return (
     <div className="navBarSearchBox">
       <nav className="navSearchBar">
         <div className="NavSearch-bar">
-          <form action="/search" method="GET">
-            <input type="text" placeholder="Search..." name="q" />
-            <button type="submit">
+          <form>
+            <input
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
+              type="text"
+              placeholder="Search..."
+            />
+            <button onClick={searchItems}>
               <FontAwesomeIcon icon={faSearch} />
             </button>
           </form>
         </div>
         <div className="navBarSearchList">
-          {" "}
           <ul className="navBarSearch">
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">Services</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
+            {tags &&
+              tags.map((tag: Record<string, string>) => (
+                <li
+                  onClick={(e) => {
+                    setQuery(tag.name);
+                    searchItems(e);
+                  }}
+                >
+                  <p>{tag.name}</p>
+                </li>
+              ))}
           </ul>
         </div>
       </nav>
     </div>
   );
-}
+};
+export default NavBarSearch;

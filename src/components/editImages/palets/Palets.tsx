@@ -11,15 +11,36 @@ import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
-const ResizableImage: React.FC<any> = ({ src, alt, isSelected }) => {
+const ResizableImage: React.FC<any> = ({
+  src,
+  alt,
+  isSelected,
+  setWidthImg,
+  SetHeightImg,
+}) => {
   const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
+  const containerRef = useRef(null);
 
-  const handleResize = (e: any) => {
-    const { width, height } = e.target.getBoundingClientRect();
-    setDimensions({ width, height });
-  };
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      setWidthImg(width);
+      SetHeightImg(height);
+    });
+
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        resizeObserver.unobserve(containerRef.current);
+      }
+    };
+  }, []);
   return (
     <div
+      ref={containerRef}
       style={
         !isSelected
           ? {
@@ -38,11 +59,6 @@ const ResizableImage: React.FC<any> = ({ src, alt, isSelected }) => {
               overflowY: "hidden",
             }
       }
-      onResize={(e) => {
-        if (isSelected) {
-          handleResize(e);
-        }
-      }}
     >
       <img
         className="unselectable"
@@ -61,6 +77,8 @@ const ResizableImage: React.FC<any> = ({ src, alt, isSelected }) => {
 };
 
 const Palets: React.FC<any> = (props: any) => {
+  const [widthImg, setWidthImg] = useState(100);
+  const [heightImg, SetHeightImg] = useState(100);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const context = useContext<any>(contextBox);
   const [coverImg, setCoverImg] = useState<string>("");
@@ -68,6 +86,8 @@ const Palets: React.FC<any> = (props: any) => {
   const [imageUrl, setImageUrl] = useState<string>("");
   const [images, setImages] = useState<IImage[]>([]);
   const [cookies, setCookie] = useCookies(["user"]);
+  const printRef = useRef<any>();
+
   const navigate = useNavigate();
   useEffect(() => {
     if (props.coverImage) {
@@ -109,7 +129,6 @@ const Palets: React.FC<any> = (props: any) => {
       ]);
     }
   }
-  const printRef = useRef<any>();
   const handleCaptureClick = () => {
     if (cookies.user.subscriptionType.limitExport >= 1) {
       domtoimage
@@ -132,7 +151,7 @@ const Palets: React.FC<any> = (props: any) => {
         secure: true,
       });
     } else {
-      navigate('/subscription')
+      navigate("/subscription");
     }
   };
   function upHandler() {
@@ -202,7 +221,6 @@ const Palets: React.FC<any> = (props: any) => {
     }
   }
 
-  // eslint-disable-next-line react/display-name
   return (
     <div>
       <div className="paletsContainer" ref={printRef}>
@@ -219,8 +237,10 @@ const Palets: React.FC<any> = (props: any) => {
             <div
               style={{
                 position: "absolute",
-                width: "100px",
-                height: "100px",
+                width: "150px",
+                height: "150px",
+                left: src.X - (widthImg > 200 ? widthImg - 100 : 50),
+                top: src.Y - (heightImg > 200 ? heightImg - 100 : 50),
               }}
               onDoubleClick={() => {
                 src.selected = !src.selected;
@@ -238,6 +258,8 @@ const Palets: React.FC<any> = (props: any) => {
               onMouseMove={(e) => MoveImages(e, src.isDrag, src.id)}
             >
               <ResizableImage
+                setWidthImg={setWidthImg}
+                SetHeightImg={SetHeightImg}
                 src={`${process.env.REACT_APP_API_BASE_URL}/${src.image}`}
                 isSelected={src.selected}
                 alt="Resizable"
