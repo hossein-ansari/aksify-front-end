@@ -8,6 +8,8 @@ const AllDataProvider: React.FC<AllDataProviderProps> = ({ children }) => {
   const [brushSize, setBrushSize] = useState<string>("5");
   const [selectedTool, setSelectedTool] = useState<string>("brush");
   const [circles, setCircles] = useState<Array<object>>([]);
+  const [shapes, setShapes] = useState<Array<object>>([]);
+
   const [circlesRemoved, setCirclesRemoved] = useState<Array<object>>([]);
 
   return (
@@ -18,6 +20,8 @@ const AllDataProvider: React.FC<AllDataProviderProps> = ({ children }) => {
         circlesRemoved,
         selectedTool,
         circles,
+        shapes,
+        setShapes,
         setCirclesRemoved,
         setCircles,
         setSelectedTool,

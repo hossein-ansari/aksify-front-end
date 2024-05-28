@@ -37,3 +37,13 @@
 .downloadImgEditPage:hover{
     background-color: var(--primary-color-blue);
 }
+.circle{
+    border-radius: 50%;
+}
+
+.elliptical {
+    width: 150px;
+    height: 100px;
+    background-color: purple;
+    border-radius: 50% / 25%;
+  }

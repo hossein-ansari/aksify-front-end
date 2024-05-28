@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import IImage from "./interface";
+import {IImage} from "./interface";
+import {IShape} from './interface'
 import "./style.css";
 import { contextBox } from "../../../_context/context";
 import domtoimage from "dom-to-image";
@@ -10,75 +11,14 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-
-const ResizableImage: React.FC<any> = ({
-  src,
-  alt,
-  isSelected,
-  setWidthImg,
-  SetHeightImg,
-}) => {
-  const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      const { width, height } = entries[0].contentRect;
-      setWidthImg(width);
-      SetHeightImg(height);
-    });
-
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        resizeObserver.unobserve(containerRef.current);
-      }
-    };
-  }, []);
-  return (
-    <div
-      ref={containerRef}
-      style={
-        !isSelected
-          ? {
-              width: dimensions.width,
-              height: dimensions.height,
-              overflow: "auto",
-              border: "0px solid black",
-              overflowY: "hidden",
-            }
-          : {
-              width: dimensions.width,
-              height: dimensions.height,
-              resize: "both",
-              overflow: "auto",
-              border: "2px solid blue",
-              overflowY: "hidden",
-            }
-      }
-    >
-      <img
-        className="unselectable"
-        draggable="false"
-        onDragStart={(e: any) => e.preventDefault()}
-        src={src}
-        alt={alt}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "contain",
-        }}
-      />
-    </div>
-  );
-};
+import ResizableImage from './ResizableImage'
+import ResizableShape from "./ResizableShapes";
 
 const Palets: React.FC<any> = (props: any) => {
   const [widthImg, setWidthImg] = useState(100);
   const [heightImg, SetHeightImg] = useState(100);
+  const [widthShape, setWidthShape] = useState(100);
+  const [heightShape, SetHeightShape] = useState(100);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const context = useContext<any>(contextBox);
   const [coverImg, setCoverImg] = useState<string>("");
@@ -87,7 +27,6 @@ const Palets: React.FC<any> = (props: any) => {
   const [images, setImages] = useState<IImage[]>([]);
   const [cookies, setCookie] = useCookies(["user"]);
   const printRef = useRef<any>();
-
   const navigate = useNavigate();
   useEffect(() => {
     if (props.coverImage) {
@@ -129,6 +68,9 @@ const Palets: React.FC<any> = (props: any) => {
       ]);
     }
   }
+  function upHandler() {
+    setIsDragging(false);
+  }
   const handleCaptureClick = () => {
     if (cookies.user.subscriptionType.limitExport >= 1) {
       domtoimage
@@ -154,15 +96,11 @@ const Palets: React.FC<any> = (props: any) => {
       navigate("/subscription");
     }
   };
-  function upHandler() {
-    setIsDragging(false);
-  }
   const handleFileChange = async (e: any) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
     await handleFileUpload(selectedFile);
   };
-
   const handleFileUpload = async (selectedFile: any) => {
     if (!selectedFile) {
       console.error("No file selected");
@@ -193,8 +131,8 @@ const Palets: React.FC<any> = (props: any) => {
           selected: true,
           isDrag: false,
           id: Math.random().toString(),
-          X: 20,
-          Y: 30,
+          X: 250,
+          Y: 250,
         },
       ]);
     } catch (err) {}
@@ -220,7 +158,27 @@ const Palets: React.FC<any> = (props: any) => {
       }
     }
   }
-
+  function MoveShapes(
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    selected: boolean,
+    id: string
+  ) {
+    if (selected) {
+      setIsDragging(false);
+    }
+    if (selected === true) {
+      const shapesCopy = [...context.shapes];
+      const shapeSelectedToMove: IShape | undefined = shapesCopy.find(
+        (img) => img.id === id
+      );
+      const { clientX, clientY } = event;
+      if (shapeSelectedToMove) {
+        shapeSelectedToMove.X = clientX;
+        shapeSelectedToMove.Y = clientY;
+        context.setShapes(shapesCopy);
+      }
+    }
+  }
   return (
     <div>
       <div className="paletsContainer" ref={printRef}>
@@ -258,10 +216,47 @@ const Palets: React.FC<any> = (props: any) => {
               onMouseMove={(e) => MoveImages(e, src.isDrag, src.id)}
             >
               <ResizableImage
+                setDragFalse ={()=>{src.isDrag= false}}
                 setWidthImg={setWidthImg}
                 SetHeightImg={SetHeightImg}
                 src={`${process.env.REACT_APP_API_BASE_URL}/${src.image}`}
                 isSelected={src.selected}
+                isDrag={src.isDrag}
+                alt="Resizable"
+              />
+            </div>
+          ))}
+          {context.shapes.map((shape:IShape) => (
+            <div
+              style={{
+                position: "absolute",
+                width: "150px",
+                height: "150px",
+                left: shape.X - (widthImg > 200 ? widthImg - 100 : 50),
+                top: shape.Y - (heightImg > 200 ? heightImg - 100 : 50),
+              }}
+              onDoubleClick={() => {
+                shape.selected = !shape.selected;
+              }}
+              onMouseUp={() => {
+                if (shape.selected) {
+                  shape.isDrag = false;
+                }
+              }}
+              onMouseDown={() => {
+                if (shape.selected) {
+                  shape.isDrag = true;
+                }
+              }}
+              onMouseMove={(e) => MoveShapes(e, shape.isDrag, shape.id)}
+            >
+              <ResizableShape
+                setDragFalse ={()=>{shape.isDrag= false}}
+                setWidthShape={setWidthShape}
+                SetHeightShape={SetHeightShape}
+                shape={shape.shape}
+                isSelected={shape.selected}
+                isDrag={shape.isDrag}
                 alt="Resizable"
               />
             </div>
