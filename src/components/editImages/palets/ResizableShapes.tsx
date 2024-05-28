@@ -6,6 +6,8 @@ const ResizableShape: React.FC<any> = ({
   setWidthShape,
   SetHeightShape,
   setDragFalse,
+  color,
+
 }) => {
   const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
   const [rotation, setRotation] = useState(0); // State to track the rotation angle
@@ -133,7 +135,7 @@ const ResizableShape: React.FC<any> = ({
         draggable="false"
         onDragStart={(e: any) => e.preventDefault()}
         style={{
-          backgroundColor: context.selectedColor,
+          backgroundColor: color,
           width: '100%',
           height: '100%',
           objectFit: 'contain',

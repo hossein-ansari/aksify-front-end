@@ -1,49 +1,55 @@
-.palets{
-    margin: 0 auto;
-    width: 400px;
-    height: 420px;
-    border: 10px solid yellow outset;
-    padding: 10px;
-    z-index: -10;
-    background-size: cover;
-    background-repeat: no-repeat;
+.palets {
+  margin: 0 auto;
+  width: 400px;
+  height: 420px;
+  border: 10px solid yellow outset;
+  padding: 10px;
+  z-index: -10;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .unselectable {
-    user-select: none;       
-    -webkit-user-select: none;
-    -moz-user-select: none;  
-    -ms-user-select: none;    
-    -webkit-user-drag: none;  
-    -khtml-user-drag: none;   
-    -moz-user-drag: none;     
-    -o-user-drag: none;       
-  }
-.exportAndUploadBox{
-    margin-left: 73vw;
-    display: flex;
-    align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
 }
-.downloadImgEditPage{
-    border-radius: 5px;
-    padding: 10px 15px;
-    border: 1px solid rgb(219, 219, 219);
-    background-color: var(--primary-color-darker);
-    cursor: pointer;
+.exportAndUploadBox {
+  margin-left: 73vw;
+  display: flex;
+  align-items: center;
 }
-.downloadImgEditPage svg{
-    font-size: 1.2rem;
-    color: rgb(240, 240, 240);
+.downloadImgEditPage {
+  border-radius: 5px;
+  padding: 10px 15px;
+  border: 1px solid rgb(219, 219, 219);
+  background-color: var(--primary-color-darker);
+  cursor: pointer;
 }
-.downloadImgEditPage:hover{
-    background-color: var(--primary-color-blue);
+.downloadImgEditPage svg {
+  font-size: 1.2rem;
+  color: rgb(240, 240, 240);
 }
-.circle{
-    border-radius: 50%;
+.downloadImgEditPage:hover {
+  background-color: var(--primary-color-blue);
+}
+.circle {
+  border-radius: 50%;
 }
 
-.elliptical {
-    width: 150px;
-    height: 100px;
-    background-color: purple;
-    border-radius: 50% / 25%;
-  }
+.pill {
+  width: 200px;
+  height: 50px;
+  background-color: orange;
+  border-radius: 25px;
+}
+.quarterCircle {
+  width: 100px;
+  height: 100px;
+  background-color: pink;
+  border-radius: 0 100% 0 0;
+}

@@ -12,6 +12,7 @@ interface IShape {
   X: number;
   Y: number;
   id: string;
+  color: string;
   isDrag: boolean;
 }
 

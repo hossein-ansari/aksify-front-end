@@ -10,7 +10,6 @@ export default function Header() {
   return (
     <div className='headerBar'>
       <Tools></Tools>
-      <Shapes></Shapes>
       <BackAndAhead />
       <Size></Size>
       <Colors></Colors>

@@ -1,15 +1,12 @@
 import React, { useContext } from "react";
 import { contextBox } from "../../../_context/context";
-import {
-  FaPlay,
-  FaGem,
-  FaEllo,
-  FaCloud,
-  FaRainbow,
-  FaShapes,
-  FaHeart,
-  FaStar,
-} from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { CiPill } from "react-icons/ci";
+import { IoTriangle } from "react-icons/io5";
+import { FaCircle } from "react-icons/fa";
+import { BiSolidCircleQuarter } from "react-icons/bi";
+import "./shapes.css";
 const Shapes: React.FC = () => {
   const context = useContext<any>(contextBox);
   function makeShape(shape: string) {
@@ -19,6 +16,7 @@ const Shapes: React.FC = () => {
         shape: shape,
         selected: true,
         isDrag: false,
+        color: context.selectedColor,
         id: Math.random().toString(),
         X: 250,
         Y: 250,
@@ -27,29 +25,37 @@ const Shapes: React.FC = () => {
   }
   return (
     <div className="shapes-container">
-      <div onClick={()=>{makeShape("triangle")}}>
-        <FaPlay className="icon" />
+      <div
+      className="iconShapeBox"
+        onClick={() => {
+          makeShape("triangle");
+        }}
+      >
+        <IoTriangle className="iconShape"></IoTriangle>
       </div>
-      <div onClick={()=>{makeShape("elliptical")}}>
-        <FaGem className="icon" />
+      <div
+      className="iconShapeBox"
+        onClick={() => {
+          makeShape("circle");
+        }}
+      >
+        <FaCircle  className="iconShape"></FaCircle>
       </div>
-      <div onClick={()=>{makeShape("trapezoid")}}>
-        <FaEllo className="icon" />
+      <div
+      className="iconShapeBox"
+        onClick={() => {
+          makeShape("pill");
+        }}
+      >
+        <CiPill  className="iconShape"></CiPill>
       </div>
-      <div onClick={()=>{makeShape("circle")}}>
-        <FaCloud className="icon" />
-      </div>
-      <div onClick={()=>{makeShape("rainbow")}}>
-        <FaRainbow className="icon" />
-      </div>
-      <div onClick={()=>{makeShape("pentagon")}}>
-        <FaShapes className="icon" />
-      </div>
-      <div onClick={()=>{makeShape("heart")}}>
-        <FaHeart className="icon" />
-      </div>
-      <div onClick={()=>{makeShape("star")}}>
-        <FaStar className="icon" />
+      <div
+      className="iconShapeBox"
+        onClick={() => {
+          makeShape("quarterCircle ");
+        }}
+      >
+        <BiSolidCircleQuarter className="iconShape"></BiSolidCircleQuarter>
       </div>
     </div>
   );

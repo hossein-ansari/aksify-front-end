@@ -161,7 +161,7 @@ const Palets: React.FC<any> = (props: any) => {
   function MoveShapes(
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     selected: boolean,
-    id: string
+    id: string,
   ) {
     if (selected) {
       setIsDragging(false);
@@ -255,6 +255,7 @@ const Palets: React.FC<any> = (props: any) => {
                 setWidthShape={setWidthShape}
                 SetHeightShape={SetHeightShape}
                 shape={shape.shape}
+                color={shape.color}
                 isSelected={shape.selected}
                 isDrag={shape.isDrag}
                 alt="Resizable"
