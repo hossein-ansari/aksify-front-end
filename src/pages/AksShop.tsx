@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Header from "../components/Header/Header";
 import NavBarSearch from "../components/aksShop/NavBarSearch/NavBarSearch";
 import AksLists from "../components/aksShop/AksList/AksLists";
+import Footer from "../components/footer/Footer";
+
 import "./app.css";
 export default function AksShop() {
   const [search, setSearch] = useState<string>("");
@@ -12,7 +14,7 @@ export default function AksShop() {
       `${process.env.REACT_APP_API_BASE_URL}/products/searchItems?word=${search}`
     )
       .then((response) => response.json())
-      .then(data => setItemsSearched(data));
+      .then((data) => setItemsSearched(data));
   }
   return (
     <div>
@@ -21,6 +23,7 @@ export default function AksShop() {
         <AksLists itemsSearched={itemsSearched} />
         <NavBarSearch setQuery={setSearch} searchItems={searchItems} />
       </div>
+      <Footer />
     </div>
   );
 }
