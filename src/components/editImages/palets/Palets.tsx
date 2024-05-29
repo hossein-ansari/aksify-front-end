@@ -32,7 +32,8 @@ const Palets: React.FC<any> = (props: any) => {
   const [cookies, setCookie] = useCookies(["user"]);
   const printRef = useRef<any>();
   const [initialPosition, setInitialPosition] = useState({ x: 0, y: 0 });
-  const movementThreshold = 1;
+  const movementThreshold = 5;
+  const [distanceMoved, setDistanceMoved] = useState<number>();
   const navigate = useNavigate();
   useEffect(() => {
     if (props.coverImage) {
@@ -40,19 +41,32 @@ const Palets: React.FC<any> = (props: any) => {
       setCoverImg(imageUrl);
     }
   }, [props.coverImage]);
-  function clickHandler(event:any) {
+  function clickHandler(e: any) {
+    setDistanceMoved(0)
     setIsDragging(true);
-    setInitialPosition({ x: event.clientX, y: event.clientY });
+    setInitialPosition({ x: e.clientX, y: e.clientY });
   }
   function MoveHandler(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     const { clientX, clientY } = event;
-    const distanceMoved = Math.sqrt(
-      Math.pow(clientX - initialPosition.x, 2) + Math.pow(clientY - initialPosition.y, 2)
+    setDistanceMoved(
+      Math.sqrt(
+        Math.pow(clientX - initialPosition.x, 2) +
+          Math.pow(clientY - initialPosition.y, 2)
+      )
     );
 
-    if (distanceMoved > movementThreshold) {
     let isDrawOn = isDragging && clientY > 0 + Number(context.brushSize);
+    const circleArry = []
+
     if (isDrawOn && context.selectedTool === "brush") {
+      circleArry.push({
+        x: clientX,
+        y: clientY,
+        id: Math.random().toString(),
+        color: context.selectedColor,
+        size: context.brushSize,
+        reduce: "50%",
+      },)
       context.setCircles((prevCircles: any) => [
         ...prevCircles,
         {
@@ -80,9 +94,21 @@ const Palets: React.FC<any> = (props: any) => {
       ]);
     }
   }
-  }
   function upHandler() {
     setIsDragging(false);
+    if (distanceMoved) {
+      if (distanceMoved > movementThreshold) {
+        let newCircles = [...context.circles];
+        let circlesRemoved = [...context.circlesRemoved];
+        if (newCircles[0]) {
+          let circlesLength = newCircles.length;
+          circlesRemoved.push(newCircles[circlesLength - 1]);
+          newCircles.pop();
+          context.setCircles(newCircles);
+          context.setCirclesRemoved(circlesRemoved);
+        }
+      }
+    }
   }
   const handleCaptureClick = () => {
     if (cookies.user.subscriptionType.limitExport >= 1) {
@@ -223,43 +249,42 @@ const Palets: React.FC<any> = (props: any) => {
           onMouseMove={(e) => MoveHandler(e)}
         >
           {images.map((src) => (
-
-              <div
-                style={{
-                  position: "absolute",
-                  width: "150px",
-                  height: "150px",
-                  left: src.X - (widthImg > 200 ? widthImg - 100 : 50),
-                  top: src.Y - (heightImg > 200 ? heightImg - 100 : 50),
+            <div
+              style={{
+                position: "absolute",
+                width: "150px",
+                height: "150px",
+                left: src.X - (widthImg > 200 ? widthImg - 100 : 50),
+                top: src.Y - (heightImg > 200 ? heightImg - 100 : 50),
+              }}
+              onDoubleClick={() => {
+                src.selected = !src.selected;
+              }}
+              onMouseUp={() => {
+                if (src.selected) {
+                  src.isDrag = false;
+                }
+              }}
+              onMouseDown={() => {
+                if (src.selected) {
+                  src.isDrag = true;
+                }
+              }}
+              onMouseMove={(e) => MoveImages(e, src.isDrag, src.id)}
+            >
+              <ResizableImage
+                setDragFalse={() => {
+                  src.isDrag = false;
                 }}
-                onDoubleClick={() => {
-                  src.selected = !src.selected;
-                }}
-                onMouseUp={() => {
-                  if (src.selected) {
-                    src.isDrag = false;
-                  }
-                }}
-                onMouseDown={() => {
-                  if (src.selected) {
-                    src.isDrag = true;
-                  }
-                }}
-                onMouseMove={(e) => MoveImages(e, src.isDrag, src.id)}
-              >
-                <ResizableImage
-                  setDragFalse={() => {
-                    src.isDrag = false;
-                  }}
-                  setWidthImg={setWidthImg}
-                  deleteItem={deleteItem}
-                  SetHeightImg={SetHeightImg}
-                  src={`${process.env.REACT_APP_API_BASE_URL}/${src.image}`}
-                  isSelected={src.selected}
-                  isDrag={src.isDrag}
-                  alt="Resizable"
-                />
-              </div>
+                setWidthImg={setWidthImg}
+                deleteItem={deleteItem}
+                SetHeightImg={SetHeightImg}
+                src={`${process.env.REACT_APP_API_BASE_URL}/${src.image}`}
+                isSelected={src.selected}
+                isDrag={src.isDrag}
+                alt="Resizable"
+              />
+            </div>
           ))}
           {context.shapes.map((shape: IShape) => (
             <div
@@ -290,7 +315,6 @@ const Palets: React.FC<any> = (props: any) => {
                   shape.isDrag = false;
                 }}
                 deleteItem={deleteItem}
-
                 setWidthShape={setWidthShape}
                 SetHeightShape={SetHeightShape}
                 shape={shape.shape}
