@@ -40,4 +40,8 @@
 }
 .presentLink {
   color: var(--primary-color-darker);
+  text-decoration: none;
+}
+.presentLink svg{
+  margin-left: 5px;
 }
