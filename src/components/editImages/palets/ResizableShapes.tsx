@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { contextBox } from "../../../_context/context";
 const ResizableShape: React.FC<any> = ({
   shape,
@@ -7,6 +9,7 @@ const ResizableShape: React.FC<any> = ({
   SetHeightShape,
   setDragFalse,
   color,
+  deleteItem,
 
 }) => {
   const [dimensions, setDimensions] = useState({ width: 200, height: 200 });
@@ -92,18 +95,7 @@ const ResizableShape: React.FC<any> = ({
               cursor: "grab",
             }}
           />
-          <div
-            onMouseDown={handleRotateStart}
-            style={{
-              width: 10,
-              height: 20,
-              backgroundColor: "blue",
-              position: "absolute",
-              top: -10,
-              right: -0,
-              cursor: "grab",
-            }}
-          />
+
           <div
             onMouseDown={handleRotateStart}
             style={{
@@ -116,19 +108,29 @@ const ResizableShape: React.FC<any> = ({
               cursor: "grab",
             }}
           />
-          <div
-            onMouseDown={handleRotateStart}
-            style={{
-              width: 10,
-              height: 20,
-              backgroundColor: "blue",
-              position: "absolute",
-              bottom: -10,
-              right: -0,
-              cursor: "grab",
-            }}
-          />
+
         </>
+      )}
+      {isSelected && (
+        <div
+          style={{
+            width: 10,
+            height:25,
+            position: "absolute",
+            zIndex:100,
+            top: -0,
+            right: 5,
+            cursor: "pointer",
+          }}
+        >
+          <FontAwesomeIcon
+          style={{color:"red"}}
+            onClick={() => {
+              deleteItem("shape", shape.id);
+            }}
+            icon={faTrash}
+          ></FontAwesomeIcon>
+        </div>
       )}
       <div
         className={`unselectable ${shape}`}

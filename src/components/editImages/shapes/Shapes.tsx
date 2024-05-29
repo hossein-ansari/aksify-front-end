@@ -3,7 +3,7 @@ import { contextBox } from "../../../_context/context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { CiPill } from "react-icons/ci";
-import { IoTriangle } from "react-icons/io5";
+import { IoSquare } from "react-icons/io5";
 import { FaCircle } from "react-icons/fa";
 import { BiSolidCircleQuarter } from "react-icons/bi";
 import "./shapes.css";
@@ -28,10 +28,10 @@ const Shapes: React.FC = () => {
       <div
       className="iconShapeBox"
         onClick={() => {
-          makeShape("triangle");
+          makeShape("Square");
         }}
       >
-        <IoTriangle className="iconShape"></IoTriangle>
+        <IoSquare className="iconShape"></IoSquare>
       </div>
       <div
       className="iconShapeBox"

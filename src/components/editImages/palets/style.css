@@ -53,3 +53,8 @@
   background-color: pink;
   border-radius: 0 100% 0 0;
 }
+.iconDeleteItems{
+  padding: 5px;
+  color: red;
+  border-radius: 2px;
+}
