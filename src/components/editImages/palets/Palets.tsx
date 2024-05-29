@@ -56,17 +56,7 @@ const Palets: React.FC<any> = (props: any) => {
     );
 
     let isDrawOn = isDragging && clientY > 0 + Number(context.brushSize);
-    const circleArry = []
-
     if (isDrawOn && context.selectedTool === "brush") {
-      circleArry.push({
-        x: clientX,
-        y: clientY,
-        id: Math.random().toString(),
-        color: context.selectedColor,
-        size: context.brushSize,
-        reduce: "50%",
-      },)
       context.setCircles((prevCircles: any) => [
         ...prevCircles,
         {
