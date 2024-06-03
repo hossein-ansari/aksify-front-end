@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 import Footer from "../components/footer/Footer";
 
 export default function Profile() {
-  const [userData,setUserData] = useState()
+  const [data, setData] = useState();
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_BASE_URL}/users/user-data`, {
       method: "GET",
@@ -14,11 +14,7 @@ export default function Profile() {
     })
       .then((response) => response.json())
       .then((data) => {
-        fetch(`${process.env.REACT_APP_API_BASE_URL}/users/user-data`)
-          .then((response) => response.json())
-          .then((data) => {
-            setUserData(data)
-          });
+        setData(data);
       })
       .catch((error) => {});
   }, []);
@@ -26,8 +22,12 @@ export default function Profile() {
     <div className="profilePage">
       <Header />
       <div className="profileContainer">
-        <ProfileHeader userData={cookies} />
-        <LastChanges userData={cookies} />
+        {data && (
+          <>
+            <ProfileHeader userData={data} />
+            <LastChanges userData={data} />
+          </>
+        )}
       </div>
       <Footer />
     </div>
