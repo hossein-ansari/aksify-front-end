@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import EditPage from './pages/editPage/EditPage';
 import Profile from './pages/Profile'
 import Subscription from './pages/Subscription'
+import About from './pages/About'
 const App = () => {
   return (
     <Router>
@@ -15,7 +16,7 @@ const App = () => {
         <Route path="/editImage/:id" element={<EditPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/subscription" element={<Subscription />} />
-
+        <Route path="/about" element={<About />} />
       </Routes>
     </Router>
   );

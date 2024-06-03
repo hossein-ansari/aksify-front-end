@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./login.css";
 import IformData from "./interface";
 import { useCookies } from "react-cookie";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [registerOrLogin, setRegisterOrLogin] = useState<String>("register");
@@ -36,6 +36,7 @@ const Login: React.FC = () => {
     } else {
       fetch(`${process.env.REACT_APP_API_BASE_URL}/users/login`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -43,12 +44,6 @@ const Login: React.FC = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          setCookie("user", data, {
-            path: "/",
-            expires: new Date(Date.now() + 604800000),
-            sameSite: "lax",
-            secure: true,
-          });
           navigate('/');
         })
         .catch((error) => {
