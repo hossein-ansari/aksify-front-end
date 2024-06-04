@@ -8,8 +8,11 @@ const NavBarSearch: React.FC<any> = ({ setQuery, searchItems }: any) => {
     fetch(`${process.env.REACT_APP_API_BASE_URL}/tags/getAll`)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         setTags(data);
-        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
   return (

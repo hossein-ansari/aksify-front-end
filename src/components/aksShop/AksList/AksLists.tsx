@@ -12,7 +12,6 @@ const AksLists: React.FC<any> = (itemsSearched) => {
     fetch(`${process.env.REACT_APP_API_BASE_URL}/products/getAll`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         setProducts(data);
       })
       .catch((error) => { 
