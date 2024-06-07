@@ -13,7 +13,7 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/aksShop" element={<AksShop />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/editImage/:id" element={<EditPage />} />
+        <Route path="/editImage/:id/:changeId?" element={<EditPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/subscription" element={<Subscription />} />
         <Route path="/about" element={<About />} />

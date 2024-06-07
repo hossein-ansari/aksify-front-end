@@ -1,7 +1,7 @@
 import React from "react";
 import "./profileHeader.css";
 const profileHeader: React.FC<any> = (props: any) => {
-  const data = props.userData.user;
+  const data = props.userData;
   return (
     <div className="profileHeaderBox">
       <div className="userDataBox">

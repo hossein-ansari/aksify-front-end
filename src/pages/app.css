@@ -26,12 +26,12 @@
     height: 100vh;
 }
 .profileContainer{
+    background-color: #f6f6f6;
     margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-
 }
 .about-container {
     max-width: 800px;

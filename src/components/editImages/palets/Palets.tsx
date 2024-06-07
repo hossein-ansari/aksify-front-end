@@ -7,15 +7,13 @@ import domtoimage from "dom-to-image";
 import { ResizableBox } from "react-resizable";
 import "react-resizable/css/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faDownload,
-  faUpload,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faUpload } from "@fortawesome/free-solid-svg-icons";
 
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import ResizableImage from "./ResizableImage";
 import ResizableShape from "./ResizableShapes";
+import { useParams } from "react-router-dom";
 
 const Palets: React.FC<any> = (props: any) => {
   const [widthImg, setWidthImg] = useState(100);
@@ -26,12 +24,30 @@ const Palets: React.FC<any> = (props: any) => {
   const context = useContext<any>(contextBox);
   const [coverImg, setCoverImg] = useState<string>("");
   const [file, setFile] = useState<any>(null);
-  const [cookies, setCookie] = useCookies(["user"]);
+  const [cookies, setCookie] = useCookies(["jwt"]);
   const printRef = useRef<any>();
   const [initialPosition, setInitialPosition] = useState({ x: 0, y: 0 });
   const movementThreshold = 5;
   const [distanceMoved, setDistanceMoved] = useState<number>();
+  const { id, changeId } = useParams<{ id: string; changeId: string }>();
+
   const navigate = useNavigate();
+  useEffect(() => {
+    if (changeId) {
+      fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/lastChanges/getOneLast/${changeId}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          context.setImages(data.images);
+          context.setCircles(data.circles);
+          context.setShapes(data.shapes);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [changeId]);
   useEffect(() => {
     if (props.coverImage) {
       const imageUrl = props.coverImage.replace(/\\/g, "/");
@@ -39,7 +55,7 @@ const Palets: React.FC<any> = (props: any) => {
     }
   }, [props.coverImage]);
   function clickHandler(e: any) {
-    setDistanceMoved(0)
+    setDistanceMoved(0);
     setIsDragging(true);
     setInitialPosition({ x: e.clientX, y: e.clientY });
   }
@@ -97,8 +113,63 @@ const Palets: React.FC<any> = (props: any) => {
       }
     }
   }
+  function handleDecreaseCount() {
+    // const data = cookies.user;
+    // data.subscriptionType.limitExport -= 1;
+    // setCookie("user", data, {
+    //   path: "/",
+    //   expires: new Date(Date.now() + 604800000),
+    //   sameSite: "lax",
+    //   secure: true,
+    // });
+  }
+  function handleSaveLastChanges() {
+    if (cookies.jwt) {
+      fetch(`${process.env.REACT_APP_API_BASE_URL}/users/user-data`, {
+        method: "GET",
+        credentials: "include",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const dataForSend = {
+            userId: data.user.id,
+            images: context.images,
+            shapes: context.shapes,
+            circles: context.circles,
+            backGroundImage: { id: id, coverImg: coverImg },
+          };
+          if (!changeId) {
+            console.log("create");
+            fetch(`${process.env.REACT_APP_API_BASE_URL}/lastChanges/create`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(dataForSend),
+            });
+          } else {
+            console.log("update");
+            fetch(
+              `${process.env.REACT_APP_API_BASE_URL}/lastChanges/update/${changeId}`,
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataForSend),
+              }
+            );
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    } else {
+      navigate("/login");
+    }
+  }
   const handleCaptureClick = () => {
-    if (cookies.user.subscriptionType.limitExport >= 1) {
+    if (cookies.jwt) {
       domtoimage
         .toPng(printRef.current)
         .then((dataUrl) => {
@@ -110,14 +181,8 @@ const Palets: React.FC<any> = (props: any) => {
         .catch((error) => {
           console.error("Error capturing image:", error);
         });
-      const data = cookies.user;
-      data.subscriptionType.limitExport -= 1;
-      setCookie("user", data, {
-        path: "/",
-        expires: new Date(Date.now() + 604800000),
-        sameSite: "lax",
-        secure: true,
-      });
+      handleDecreaseCount();
+      handleSaveLastChanges();
     } else {
       navigate("/subscription");
     }
@@ -150,7 +215,7 @@ const Palets: React.FC<any> = (props: any) => {
       }
 
       const data: Record<string, string> = await response.json();
-      context.setImages((prev:any) => [
+      context.setImages((prev: any) => [
         ...prev,
         {
           image: data.images,
@@ -235,7 +300,7 @@ const Palets: React.FC<any> = (props: any) => {
           onMouseDown={clickHandler}
           onMouseMove={(e) => MoveHandler(e)}
         >
-          {context.images.map((src:any) => (
+          {context.images.map((src: any) => (
             <div
               style={{
                 position: "absolute",

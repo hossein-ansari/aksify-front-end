@@ -13,11 +13,10 @@
     cursor: pointer;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.305);
     margin: 1rem 2.4rem;
-    width: 21vw;
+    width: 15vw;
     max-width:21vw;
     border-radius: 10px;
-
-    background-color:rgb(255, 255, 255);
+    background-color:rgb(147, 147, 147);
     transition: 0.2s  ease-in-out;
 }
 .lastChangesImgBox:hover{
@@ -26,8 +25,8 @@
 .lastChangesImgImage{
     width: 15vw;
     max-width: 15vw;
-    border-radius:10px 10px 0 0;
-    border-bottom:3px solid #f6f6f6;
+    border-radius:10px;
+    border-bottom:3px solid #333333;
 }
 .lastChangesTitle{
     border-bottom: 3px solid #f6f6f6;
