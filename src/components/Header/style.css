@@ -12,10 +12,21 @@
   padding: 0 100px;
   box-shadow: 0px 0px 8px 0px rgba(25, 25, 25, 0.75);
 }
-.logoBox {
+.logoBox a{
 }
 .logoImage {
+  border-radius: 50%;
   width: 70px;
+  margin: 5px 0;
+  padding-left: 25px;
+  height: 70px;
+  transition: 0.2s ease-in-out;
+}
+.logoImage:hover{
+  border-radius: 50%;
+  width: 70px;
+  margin: 5px 0;
+  padding-left: 0px;
   height: 70px;
 }
 .listBox {

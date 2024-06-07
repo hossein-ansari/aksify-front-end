@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDownload,
   faUpload,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useCookies } from "react-cookie";
@@ -27,8 +26,6 @@ const Palets: React.FC<any> = (props: any) => {
   const context = useContext<any>(contextBox);
   const [coverImg, setCoverImg] = useState<string>("");
   const [file, setFile] = useState<any>(null);
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [images, setImages] = useState<IImage[]>([]);
   const [cookies, setCookie] = useCookies(["user"]);
   const printRef = useRef<any>();
   const [initialPosition, setInitialPosition] = useState({ x: 0, y: 0 });
@@ -153,7 +150,7 @@ const Palets: React.FC<any> = (props: any) => {
       }
 
       const data: Record<string, string> = await response.json();
-      setImages((prev) => [
+      context.setImages((prev:any) => [
         ...prev,
         {
           image: data.images,
@@ -175,7 +172,7 @@ const Palets: React.FC<any> = (props: any) => {
       setIsDragging(false);
     }
     if (selected === true) {
-      const imagesCopy = [...images];
+      const imagesCopy = [...context.images];
       const imageSelectedToMove: IImage | undefined = imagesCopy.find(
         (img) => img.id === id
       );
@@ -183,7 +180,7 @@ const Palets: React.FC<any> = (props: any) => {
       if (imageSelectedToMove) {
         imageSelectedToMove.X = clientX;
         imageSelectedToMove.Y = clientY;
-        setImages(imagesCopy);
+        context.setImages(imagesCopy);
       }
     }
   }
@@ -211,10 +208,10 @@ const Palets: React.FC<any> = (props: any) => {
   function deleteItem(type: string, id: string) {
     if (type === "image") {
       console.log("ye");
-      let imagesCopy = [...images];
+      let imagesCopy = [...context.images];
       const findImage: any = imagesCopy.findIndex((img) => img.id == id);
       imagesCopy.splice(findImage, 1);
-      setImages(imagesCopy);
+      context.setImages(imagesCopy);
       console.log(findImage);
     }
     if (type === "shape") {
@@ -238,7 +235,7 @@ const Palets: React.FC<any> = (props: any) => {
           onMouseDown={clickHandler}
           onMouseMove={(e) => MoveHandler(e)}
         >
-          {images.map((src) => (
+          {context.images.map((src:any) => (
             <div
               style={{
                 position: "absolute",

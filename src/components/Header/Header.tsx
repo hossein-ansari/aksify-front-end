@@ -10,9 +10,9 @@ export default function LHeader() {
   const [cookies, setCookie] = useCookies(["jwt"]);
   useEffect(() => {
     if (cookies.jwt) {
-      fetch(`${process.env.REACT_APP_API_BASE_URL}/users/user-data`,{
-        method: 'GET',
-        credentials: 'include'
+      fetch(`${process.env.REACT_APP_API_BASE_URL}/users/user-data`, {
+        method: "GET",
+        credentials: "include",
       })
         .then((response) => response.json())
         .then((data) => {
@@ -26,25 +26,27 @@ export default function LHeader() {
   return (
     <div className="container">
       <div className="logoBox">
-        <img className="logoImage" src="/aksifyLogo.png" alt="" />
+        <Link to="/">
+          <img className="logoImage" src="/aksifyLogo.jpg" alt="" />
+        </Link>
       </div>
       <div className="listBox">
         <ul className="listBoxUl">
-          <li className="listItem">
+          {/* <li className="listItem">
             <Link to="/">فروشگاه عکس</Link>
           </li>
           <li className="listItem">
             <Link to="/aksshop">فروشگاه عکس</Link>
-          </li>
-          <li className="listItem">
+          </li> */}
+          {/* <li className="listItem">
             <Link to="/subscription">تعرفه ها</Link>
-          </li>
-          <li className="listItem">
+          </li> */}
+          {/* <li className="listItem">
             <Link to="/about">درباره ما</Link>
           </li>
           <li className="listItem">
             <Link to="/contact">تماس با ما</Link>
-          </li>
+          </li> */}
         </ul>
       </div>
       <div className="registerBox">
