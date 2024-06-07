@@ -16,17 +16,17 @@
     width: 15vw;
     max-width:21vw;
     border-radius: 10px;
-    background-color:rgb(147, 147, 147);
     transition: 0.2s  ease-in-out;
+    background-color: #c4c4c4;
 }
 .lastChangesImgBox:hover{
     transform: scale(1.1);
 }
 .lastChangesImgImage{
     width: 15vw;
+    height: 30vh;
     max-width: 15vw;
     border-radius:10px;
-    border-bottom:3px solid #333333;
 }
 .lastChangesTitle{
     border-bottom: 3px solid #f6f6f6;
