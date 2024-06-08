@@ -1,3 +1,9 @@
+:root {
+    --primary-color: #b2d8c3;
+    --primary-color-darker: #43906e;
+    --primary-color-blue: #237d7e;
+    --text-color: #383838;
+  }
 .profileHeaderBox{
     background-color: #fff;
     display: flex;
@@ -8,7 +14,8 @@
     box-shadow: 0 0 10px 1px #336d5459;
 }
 .profileImageBox{
-    border-left: 3px solid #f6f6f6;
+    border-left: 3px solid #e5e5e5;
+
 }
 .profileImage{
     width: 150px;
@@ -21,4 +28,13 @@
     flex-direction: column;
     width: 450px;
     margin-right: 20px;
+}
+.logOutBtn{
+    width: 100%;
+    background-color: var(--primary-color-darker);
+    border: none;
+    border-radius: 0 0 10px 0;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
 }

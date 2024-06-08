@@ -45,6 +45,7 @@ const Login: React.FC = () => {
         .then((response) => response.json())
         .then((data) => {
           navigate('/');
+          window.location.reload();
         })
         .catch((error) => {
           console.error("Error fetching data:", error);

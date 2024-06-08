@@ -43,8 +43,7 @@ const Palets: React.FC<any> = (props: any) => {
           context.setCircles(data.circles);
           context.setShapes(data.shapes);
           setTimeout(() => {
-            setCoverImg(data.backGroundImage.coverImg)
-            
+            setCoverImg(data.backGroundImage.coverImg);
           }, 50);
         })
         .catch((error) => {
@@ -188,19 +187,28 @@ const Palets: React.FC<any> = (props: any) => {
   }
   const handleCaptureClick = () => {
     if (cookies.jwt) {
-      domtoimage
-        .toPng(printRef.current)
-        .then((dataUrl) => {
-          const link = document.createElement("a");
-          link.href = dataUrl;
-          link.download = "screenshot.png";
-          link.click();
-        })
-        .catch((error) => {
-          console.error("Error capturing image:", error);
+      fetch(`${process.env.REACT_APP_API_BASE_URL}/users/user-data`, {
+        method: "GET",
+        credentials: "include",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.user.subscriptionType.limitExport >= 0) {
+            domtoimage
+              .toPng(printRef.current)
+              .then((dataUrl) => {
+                const link = document.createElement("a");
+                link.href = dataUrl;
+                link.download = "screenshot.png";
+                link.click();
+              })
+              .catch((error) => {
+                console.error("Error capturing image:", error);
+              });
+            handleDecreaseCount();
+            handleSaveLastChanges();
+          }
         });
-      handleDecreaseCount();
-      handleSaveLastChanges();
     } else {
       navigate("/subscription");
     }

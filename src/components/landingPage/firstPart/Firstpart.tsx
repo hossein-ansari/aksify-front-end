@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./firstpart.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiamond } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 export default function FirstPart() {
+  const videoRef = useRef<any>(null);
+  const handleVideoEnded = () => {
+    videoRef.current.play();
+  };
   return (
     <div className="firstPartContainer">
       <div className="rightBox">
@@ -40,7 +44,9 @@ export default function FirstPart() {
         </div>
       </div>
       <div className="leftBox">
-        <p>adsf</p>
+      <video controls={false} className="video-element" autoPlay loop muted ref={videoRef} onEnded={handleVideoEnded}>
+        <source src="/landingVideo.mp4" type="video/mp4" />
+      </video>
       </div>
     </div>
   );

@@ -85,6 +85,15 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 30%;
-  background-color: red;
+  width: 40%;
+}
+.video-element{
+  border-radius: 40%;
+  width: 45vw;
+}
+.video-element::-webkit-media-controls,
+.video-element::-webkit-media-controls-enclosure,
+.video-element::-webkit-media-controls-panel 
+ {
+  display: none !important;
 }
