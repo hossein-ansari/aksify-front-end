@@ -42,6 +42,10 @@ const Palets: React.FC<any> = (props: any) => {
           context.setImages(data.images);
           context.setCircles(data.circles);
           context.setShapes(data.shapes);
+          setTimeout(() => {
+            setCoverImg(data.backGroundImage.coverImg)
+            
+          }, 50);
         })
         .catch((error) => {
           console.log(error);
@@ -114,14 +118,28 @@ const Palets: React.FC<any> = (props: any) => {
     }
   }
   function handleDecreaseCount() {
-    // const data = cookies.user;
-    // data.subscriptionType.limitExport -= 1;
-    // setCookie("user", data, {
-    //   path: "/",
-    //   expires: new Date(Date.now() + 604800000),
-    //   sameSite: "lax",
-    //   secure: true,
-    // });
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/users/user-data`, {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        fetch(
+          `${process.env.REACT_APP_API_BASE_URL}/users/decreaseExport/${data.user.userName}`,
+          {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+              "Cache-Control": "no-cache",
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => console.log(data));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }
   function handleSaveLastChanges() {
     if (cookies.jwt) {

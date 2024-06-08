@@ -11,9 +11,12 @@ export default function Profile() {
   const [dataUser, setDataUser] = useState<any>();
   const [lastChangesData, setLastChangesData] = useState();
   async function getUserData() {
-    await fetch(`${process.env.REACT_APP_API_BASE_URL}/users/user-data`, {
+    await fetch(`${process.env.REACT_APP_API_BASE_URL}/users/user-data`,{
       method: "GET",
       credentials: "include",
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
     })
       .then((response) => response.json())
       .then((data) => {
