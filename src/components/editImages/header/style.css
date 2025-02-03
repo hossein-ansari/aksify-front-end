@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #b2d8c3;
+    --primary-color: #8b8b8b;
     --primary-color-darker: #43906e;
     --primary-color-blue: #237d7e;
     --text-color: #383838;
@@ -7,7 +7,7 @@
 .headerBar{
     display: flex;
     align-items: center;
-    height: 150px;
+    height: 100%;
     background-color: var(--primary-color);
     justify-content: center;
     width: 100%;

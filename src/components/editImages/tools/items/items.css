@@ -1,0 +1,245 @@
+.Items-container {
+  display: flex;
+  flex-wrap: wrap; /* Ensure items wrap to the next line */
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-top: 5px;
+  gap: 8px;
+  max-width: 600px;
+  height: 70px;
+  overflow-y: auto; /* Allow vertical scrolling */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.Items-container::-webkit-scrollbar {
+  height: 2px;
+  width: 10px;
+}
+
+.Items-container::-webkit-scrollbar-track {
+  background: #d9d9d9; /* Match background */
+  border-radius: 15px; /* Same border-radius */
+  margin: 5px;
+}
+
+.Items-container::-webkit-scrollbar-thumb {
+  background: #8b8b8b; /* Dark scrollbar */
+  border-radius: 15px; /* Rounded scrollbar */
+}
+
+.Items-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(50, 50, 50, 0.9); /* Slightly darker on hover */
+}
+
+.iconItemBox {
+  position: relative;
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.iconItemBox:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Info icon should only appear on hover */
+.iconItemBox .infoIcon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ffffff;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  width: 20px;
+  height: 20px;
+  display: none; /* Hide by default */
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #555;
+  cursor: pointer;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.iconItemBox:hover .infoIcon {
+  display: flex; /* Show the icon when the box is hovered */
+}
+
+.iconItemBox .infoIcon:hover {
+  background: #5dade2;
+  color: #ffffff;
+}
+
+.iconItem {
+  font-size: 10px;
+  text-align: center;
+  color: #555;
+  margin-top: 5px;
+}
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal Content */
+.modal-content {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: relative;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.2s ease-in-out;
+}
+
+.close-btn:hover {
+  color: #e74c3c;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+/* Modal Image */
+.modal-image {
+  width: 100%;
+  max-width: 250px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Body */
+.modal-body p {
+  font-size: 14px;
+  color: #444;
+  margin: 5px 0;
+}
+
+.modal-body .price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+/* Stock Styling */
+.stock {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.in-stock {
+  color: #2ecc71;
+  background: rgba(46, 204, 113, 0.2);
+}
+
+.out-stock {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1280px) {
+  .iconItemBox .infoIcon {
+    display: flex; /* Show the icon when the box is hovered */
+  }
+}
+@media (max-width: 780px) {
+  .Items-container {
+    max-width: 450px;
+  }
+}
+@media (max-width: 480px) {
+  .Items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    height: auto;
+  }
+
+  .iconItemBox {
+    width: 50px;
+    height: 50px;
+  }
+
+  .iconItemBox .infoIcon {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+}

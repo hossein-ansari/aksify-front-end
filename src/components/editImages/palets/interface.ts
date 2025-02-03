@@ -7,7 +7,7 @@ interface IImage {
   isDrag: boolean;
 }
 interface IShape {
-  shape: string;
+  shape: object;
   selected: boolean;
   X: number;
   Y: number;

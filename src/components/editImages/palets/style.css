@@ -1,10 +1,17 @@
+/* Base styles */
+.paletsContainer {
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: center;
+}
 .palets {
   margin: 0 auto;
   width: 400px;
   height: 420px;
   border: 10px solid yellow outset;
   padding: 10px;
-  z-index: -10;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -37,24 +44,53 @@
 .downloadImgEditPage:hover {
   background-color: var(--primary-color-blue);
 }
-.circle {
-  border-radius: 50%;
-}
 
-.pill {
-  width: 200px;
-  height: 50px;
-  background-color: orange;
-  border-radius: 25px;
-}
 .quarterCircle {
   width: 100px;
   height: 100px;
   background-color: pink;
   border-radius: 0 100% 0 0;
 }
-.iconDeleteItems{
+.iconDeleteItems {
   padding: 5px;
   color: red;
   border-radius: 2px;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) { /* Laptops */
+  .paletsContainer {
+    width: 400px;
+  }
+
+  .exportAndUploadBox {
+    margin-left: 70vw;
+  }
+}
+
+@media (max-width: 768px) { /* Tablets */
+  .paletsContainer {
+    width: 400px;
+
+  }
+
+  .exportAndUploadBox {
+    margin-left: 50vw;
+  }
+
+}
+
+@media (max-width: 480px) { /* Mobile */
+  .paletsContainer {
+    width:240px;
+  }
+  .palets {
+    height: 220px;
+  }
+  .exportAndUploadBox {
+    margin-left: 40vw;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
 }

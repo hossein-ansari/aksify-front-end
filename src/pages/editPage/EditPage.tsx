@@ -1,51 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Palets from "../../components/editImages/palets/Palets";
 import Header from "../../components/editImages/header/Header";
 import "./editPage.css";
 import { useParams } from "react-router-dom";
+import { contextBox } from "../../_context/context";
 
 const EditPage: React.FC<any> = (props: any) => {
-  const [productImages, setProductImages] = useState<Array<string>>([]);
-  const [coverImage, setCoverImage] = useState<string>("");
-  const { id } = useParams<{ id: string }>();
-
+  const context = useContext<any>(contextBox);
+  const [productBase, setProductBase] = useState<Array<{
+    product_id: string;
+    product_name: string;
+    product_price: string;
+    product_image: string;
+    product_stock: string;
+    product_description: string;
+    product_size: string;
+}>>([]);
+  const [coverProduct, setCoverProduct] = useState<object>({});
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/products/getOne/${id}`)
+    fetch(`${process.env.REACT_APP_API_BASE_URL2}/v1/baseImages`)
       .then((response) => response.json())
       .then((data) => {
-        setProductImages(data.images);
-        setCoverImage(data.coverImage);
+        console.log(data.category.id)
+        setProductBase(data.products);
+        setCoverProduct(data.products[0]);
+        context.setSelectedCategoryId(data.category.id)
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [id]);
-  function changeCover(image: string):void{
-    setCoverImage(image);
+  }, []);
+  function changeCover(product: object):void{
+    setCoverProduct(product);
   }
   return (
     <div className="editPage">
       <div className="EditBarPalet">
-        <Palets coverImage={coverImage} />
+        <Palets coverProduct={coverProduct} />
         <Header />
-      </div>
-      <div className="EditImageBar">
-        <h3 className="chooseImg">انتخاب عکس</h3>
-        <div className="editImageNavBar">
-          {productImages.map((image) => (
-            <div
-              key={image}
-              className="editImageNavBox"
-              onClick={(e)=>changeCover(image)}
-            >
-              <img
-                className="editImageNavImage"
-                src={`${process.env.REACT_APP_API_BASE_URL}/${image}`}
-                alt=""
-              />
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
